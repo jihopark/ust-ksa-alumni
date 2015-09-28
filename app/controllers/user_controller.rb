@@ -36,6 +36,19 @@ class UserController < ApplicationController
     end
   end
 
+  def destroy
+    @user = User.find_by_id(params[:id])
+    if @user == current_user
+      flash[:error] = "You cannot remove yourself"
+    else
+      unless @user.nil?
+        @user.destroy
+        flash[:notice] = "User was removed"
+      end
+    end
+    redirect_to admin_path
+  end
+
   def autocomplete_organization
     if params[:term]
       @organizations = User.where("lower(organization) like lower(?)", "%#{params[:term]}%").collect(&:organization).uniq

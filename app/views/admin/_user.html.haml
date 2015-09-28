@@ -1,0 +1,5 @@
+%tr{class: ("alumni_row" if user.status == "alumni")}
+  %td= user.id
+  %td.name= user.name
+  %td.year= "#{user.entrance_year.year}"
+  %td= link_to "Remove", user_path(user), data: { confirm: "Remove user? This cannot be undone" }, method: :delete

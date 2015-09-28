@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'admin' => 'admin#index', :as => 'admin'
+  post 'add_admin_user_path' => 'admin#create', :as => 'add_admin_user'
+  delete 'remove_from_admin' => 'admin#destroy', :as => 'remove_from_admin'
+
   get 'home/index'
 
   devise_for :users, :controllers => { registrations: 'registrations', sessions: "sessions", omniauth_callbacks: "callbacks"}

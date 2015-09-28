@@ -1,0 +1,5 @@
+%tr
+  %td= admin_user.id
+  %td= admin_user.name
+  - unless admin_user == current_user
+    %td= link_to "Remove", remove_from_admin_path(user: admin_user), data: { confirm: "Remove user from admin?" }, method: :delete

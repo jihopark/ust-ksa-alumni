@@ -1,0 +1,34 @@
+%h1 Admin Page
+%h2 Admin Users
+.row
+  .column.large-5.small-5
+    %table
+      %tr
+        %th User ID
+        %th Name
+        %th
+      - @admin_users.each do |user|
+        =render partial: 'admin_user', locals:{admin_user:user}
+  .column.large-7.small-7
+.row
+  =form_tag(add_admin_user_path, method:'post') do
+    .column.large-2.small-2
+      =text_field_tag 'user_id', nil, placeholder: 'User ID'
+    .column.large-2.small-2
+      =submit_tag "Add to Admin", class: "tiny button"
+    .column.large-8.small-8
+%h2 All Users
+.row
+  .column
+    Only remove users with appropriate reasons (eg. non-member)
+.row
+  .column.large-9.small-9
+    %table
+      %tr
+        %th User ID
+        %th Name
+        %th Entrance Year
+        %th
+      - @users.each do |user|
+        =render partial: 'user', locals:{user:user}
+  .column.large-3.small-3
