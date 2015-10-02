@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928120318) do
+ActiveRecord::Schema.define(version: 20151002024956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendances", force: :cascade do |t|
+    t.integer  "job_post_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "attendances", ["job_post_id"], name: "index_attendances_on_job_post_id", using: :btree
+  add_index "attendances", ["user_id"], name: "index_attendances_on_user_id", using: :btree
 
   create_table "declarations", force: :cascade do |t|
     t.integer  "major_id"
@@ -51,6 +61,28 @@ ActiveRecord::Schema.define(version: 20150928120318) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "job_posts", force: :cascade do |t|
+    t.string   "description"
+    t.string   "title"
+    t.date     "event_time"
+    t.string   "event_venue"
+    t.date     "expire_date"
+    t.boolean  "published"
+    t.string   "code"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer  "job_post_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "likes", ["job_post_id"], name: "index_likes_on_job_post_id", using: :btree
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id", using: :btree
 
   create_table "majors", force: :cascade do |t|
     t.string   "name"

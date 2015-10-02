@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  title: MyString
+  event_time: 2015-10-02
+  event_venue: MyString
+  expire_date: 2015-10-02
+  published: false
+  code: MyString
+
+two:
+  description: MyString
+  title: MyString
+  event_time: 2015-10-02
+  event_venue: MyString
+  expire_date: 2015-10-02
+  published: false
+  code: MyString
