@@ -28,6 +28,12 @@ class User < ActiveRecord::Base
            source: :industry
   has_many :majors, through: :declarations
 
+  has_many :likes, dependent: :destroy
+  has_many :attendances, dependent: :destroy
+  has_many :liked_posts, through: :likes, source: :job_post
+  has_many :attending_events, through: :attendances, source: :job_post
+
+
   def majors_text
     text_format(majors)
   end
