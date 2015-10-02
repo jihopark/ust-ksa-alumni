@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   has_many :liked_posts, through: :likes, source: :job_post
   has_many :attending_events, through: :attendances, source: :job_post
 
+  has_many :job_posts, source: :job_post, foreign_key: 'admin_user_id'
 
   def majors_text
     text_format(majors)

@@ -1,4 +1,5 @@
 class JobPost < ActiveRecord::Base
+  has_one :admin_user, class_name: :'User', foreign_key: 'admin_user_id'
   has_many :liked_users, through: :likes, source: :user
   has_many :likes, dependent: :destroy
 
