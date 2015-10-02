@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   validates :entrance_year, presence: true
   validates :graduation_year, presence: true
   validates :email, presence: true
-  validates_with EntranceGraduationYearValidator
+  validate :entrance_year_should_be_earilier_than_graduation_year
 
   has_many :interests, dependent: :destroy
   has_many :declarations, dependent: :destroy
@@ -34,6 +34,25 @@ class User < ActiveRecord::Base
   has_many :attending_events, through: :attendances, source: :job_post
 
   has_many :job_posts, source: :job_post, foreign_key: 'admin_user_id'
+  validate :only_admin_user_has_job_posts?, on: :update
+
+  def entrance_year_should_be_earilier_than_graduation_year
+    if entrance_year > graduation_year
+      errors[:graduation_year] << "should be after entrance year"
+      return false
+    end
+    return true
+  end
+
+  def only_admin_user_has_job_posts?
+    unless admin?
+      if !job_posts.nil? || !job_posts.empty?
+        errors.add(:job_posts, "Only Admin User can have job posts")
+        return false
+      end
+    end
+    return true
+  end
 
   def majors_text
     text_format(majors)
