@@ -4,6 +4,7 @@ class AdminController < ApplicationController
   def index
     @admin_users = User.where(admin:true).order("id")
     @users = User.all.order("id")
+    @posts = current_user.job_posts
   end
 
   def destroy

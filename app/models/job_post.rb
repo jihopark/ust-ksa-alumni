@@ -10,4 +10,12 @@ class JobPost < ActiveRecord::Base
   has_many :major_preferences, through: :preferences, source: :major, foreign_key: 'major_id'
   has_many :industry_preferences, through: :preferences, source: :industry, foreign_key: 'industry_id'
 
+
+  def event
+    if event_time.nil? || event_venue.nil?
+      "None"
+    else
+      "#{event_time} @#{event_venue}"
+    end 
+  end
 end

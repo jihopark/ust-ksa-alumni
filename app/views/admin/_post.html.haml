@@ -1,0 +1,10 @@
+%tr
+  %td= post.id
+  %td= post.title
+  %td= post.expire_date
+  %td= post.event
+  %td= link_to 'Edit', edit_job_post_path(post)
+  - if post.published
+    %td= link_to 'Unpublish', '#'
+  - else
+    %td= link_to 'Publish', '#'

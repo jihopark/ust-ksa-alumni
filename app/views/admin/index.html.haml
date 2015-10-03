@@ -1,5 +1,25 @@
-%h1 Admin Page
-%h2 Admin Users
+%h2 Configure Job Posts
+.row
+  .column.large-12.small-12
+    %table
+      %tr
+        %th Post ID
+        %th Title
+        %th Exp. Date
+        %th Event
+        %th Edit URL
+        %th
+        %th
+      - unless @posts.empty?
+        - @posts.each do |post|
+          =render partial: 'post', locals:{post:post}
+      - else
+        %tr
+          %td No job posts yet.
+.row
+  .column.large-3.small-3
+    =link_to 'Create Job Post', job_posts_path, method: 'post', class: 'button'
+%h2 Add/Remove Admin Users
 .row
   .column.large-5.small-5
     %table
@@ -17,7 +37,7 @@
     .column.large-2.small-2
       =submit_tag "Add to Admin", class: "tiny button"
     .column.large-8.small-8
-%h2 All Users
+%h2 Manage All Users
 .row
   .column
     Only remove users with appropriate reasons (eg. non-member)
