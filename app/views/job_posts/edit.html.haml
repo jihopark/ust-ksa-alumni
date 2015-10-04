@@ -26,14 +26,20 @@
           %p.subheader.text-left **This post will be inactive after this date
   %fieldset
     %legend Event Info
-    .row#event_subheader
-      .columns
-        %h6.subheader **This section is only needed if there is an event with this job post
+    .row
+      .field
+        .small-6.large-6.columns#event_subheader
+          %span#has_event Is there an event related to this job post?
+          = f.radio_button :has_event, true
+          = f.label :has_event, "Yes", value: true
+          = f.radio_button :has_event, false
+          = f.label :has_event, "No", value: false
+        .small-6.large-6.columns
     .row
       .field
         .small-2.large-2.columns.text-align-right
           = f.label :event_time
-        .small-5.large-5.columns.no_margin_padding.date_selector
+        .small-5.large-5.columns.no_margin_padding.date_selector#event_date_selector
           = f.datetime_select :event_time, {start_year:Date.current.year, end_year:Date.current.year+1, use_short_month: true, default: {month: Date.current.month, day: Date.current.day, hour:19, minute: 0}}
         .small-5.large-5.columns
     .row
