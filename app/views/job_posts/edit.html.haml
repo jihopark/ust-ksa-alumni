@@ -1,2 +1,48 @@
-%h1 JobPost#edit
-%p Find me in app/views/job_post/edit.html.haml
+%h2 Update JobPost
+= form_for(@post, url: job_post_path(@post), html: { method: :put }) do |f|
+  %fieldset
+    %legend Basic Info
+    .row
+      .field
+      .small-2.large-2.columns.text-align-right
+        = f.label :title, class:'inline'
+      .small-5.large-5.columns.no_margin_padding
+        = f.text_field :title, autofocus: true, required: true
+      .small-5.large-5.columns
+    .row
+      .field
+        .small-2.large-2.columns.text-align-right
+          = f.label :description, class:'inline'
+        .small-5.large-5.columns.no_margin_padding
+          = f.text_area :description, autofocus: true, rows: 20, required: true
+        .small-5.large-5.columns
+    .row
+      .field
+        .small-2.large-2.columns.text-align-right
+          = f.label :expire_date
+        .small-5.large-5.columns.no_margin_padding.date_selector
+          = f.date_select :expire_date, {start_year:Date.current.year, end_year:Date.current.year+1, use_short_month: true, default: {month: Date.current.month, day: Date.current.day}}
+        .small-5.large-5.columns
+          %p.subheader.text-left **This post will be inactive after this date
+  %fieldset
+    %legend Event Info
+    .row#event_subheader
+      .columns
+        %h6.subheader **This section is only needed if there is an event with this job post
+    .row
+      .field
+        .small-2.large-2.columns.text-align-right
+          = f.label :event_time
+        .small-5.large-5.columns.no_margin_padding.date_selector
+          = f.datetime_select :event_time, {start_year:Date.current.year, end_year:Date.current.year+1, use_short_month: true, default: {month: Date.current.month, day: Date.current.day, hour:19, minute: 0}}
+        .small-5.large-5.columns
+    .row
+      .field
+      .small-2.large-2.columns.text-align-right
+        = f.label :event_venue, class:'inline'
+      .small-5.large-5.columns.no_margin_padding
+        = f.text_field :event_venue, autofocus: true, placeholder: "If undecided, put TBA"
+      .small-5.large-5.columns
+  .row.actions
+    .small-centered.large-centered.columns.large-3.small-3
+      = f.submit "Update", class: 'large button', id: 'update_button'

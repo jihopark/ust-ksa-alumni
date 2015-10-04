@@ -18,6 +18,7 @@ class JobPostsController < ApplicationController
   end
 
   def edit
+    @post = JobPost.find(params[:id])
   end
 
   def index
