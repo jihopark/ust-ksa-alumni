@@ -18,7 +18,11 @@ class JobPostsController < ApplicationController
   end
 
   def edit
-    @post = JobPost.find(params[:id])
+    @post = JobPost.find_by_code(params[:code])
+    if @post.nil?
+      flash[:error] = "Wrong URL. Please try again"
+      redirect_to root_path
+    end
   end
 
   def index
