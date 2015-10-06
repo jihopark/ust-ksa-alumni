@@ -49,6 +49,9 @@
       .small-5.large-5.columns.no_margin_padding
         = f.text_field :event_venue, autofocus: true, placeholder: "If undecided, put TBA"
       .small-5.large-5.columns
+  %fieldset
+    %legend Preferences
+    = react_component 'JobPostPreferences', {}, :div
   .row.actions
     .small-centered.large-centered.columns.large-3.small-3
       = f.submit "Update", class: 'large button', id: 'update_button'
