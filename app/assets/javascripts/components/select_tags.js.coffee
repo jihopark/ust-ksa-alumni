@@ -48,6 +48,11 @@
     console.log "click major"
     @setState
       select: "major"
+  onCheckBoxChange: (item, value, select) ->
+    if value
+      @props.addSelected(item, select)
+    else
+      @props.removeSelected(item, select)
   render: ->
     <div className="select_tags">
       <dl className="sub-nav">
@@ -68,13 +73,17 @@
       <ul>
         {
           if @state.didFetchData
-
             if @isMajor()
               data = @majors
             else if @isIndustry()
               data = @industries
-            data.map (item) ->
-              <SelectTag key={item.id} item={item} />
+
+            for item in data
+              <SelectTag key={item.id} item={item}
+              select={@state.select}
+              onCheckBoxChange={@onCheckBoxChange}
+               />
+
           else
             @state.loadingMessage
         }
