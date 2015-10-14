@@ -66,6 +66,8 @@ gem 'rails_12factor', group: :production
 # For React
 gem 'react-rails'
 gem 'sprockets-coffee-react'
+gem 'active_model_serializers'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

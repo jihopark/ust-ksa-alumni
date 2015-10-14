@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   resources :job_posts
 
   get 'admin' => 'admin#index', :as => 'admin'
@@ -21,6 +20,10 @@ Rails.application.routes.draw do
     get :autocomplete_location, :on => :collection
     get :autocomplete_organization, :on => :collection
   end
+
+  #json for ajax calls
+  resources :majors
+  resources :industries
 
 
   # The priority is based upon order of creation: first created -> highest priority.
