@@ -36,16 +36,10 @@
     @industries = data.industries
     @setState
       didFetchData: true
-  isMajor: () ->
-    @state.select == "major"
-  isIndustry: () ->
-    @state.select == "industry"
   onClickIndustry: (event) ->
-    console.log "click industry"
     @setState
       select: "industry"
   onClickMajor: (event) ->
-    console.log "click major"
     @setState
       select: "major"
   onCheckBoxChange: (item, value, select) ->
@@ -55,27 +49,16 @@
       @props.removeSelected(item, select)
   render: ->
     <div className="select_tags">
-      <dl className="sub-nav">
-        <dt>Select:</dt>
-        {
-          if @isMajor()
-            <span>
-              <dd className="active"><a href="#major">Major</a></dd>
-              <dd><a href="#industry" onClick={@onClickIndustry}>Industry</a></dd>
-            </span>
-          else if @isIndustry()
-            <span>
-              <dd><a href="#major" onClick={@onClickMajor}>Major</a></dd>
-              <dd className="active"><a href="#industry">Industry</a></dd>
-            </span>
-        }
-      </dl>
+      <SelectTagsHeader className="SelectTagsHeader"
+      select={@state.select}
+      onClickMajor={@onClickMajor} onClickIndustry={@onClickIndustry} />
+
       <ul>
         {
           if @state.didFetchData
-            if @isMajor()
+            if @state.select == "major"
               data = @majors
-            else if @isIndustry()
+            else if @state.select == "industry"
               data = @industries
 
             for item in data
@@ -83,7 +66,6 @@
               select={@state.select}
               onCheckBoxChange={@onCheckBoxChange}
                />
-
           else
             @state.loadingMessage
         }
