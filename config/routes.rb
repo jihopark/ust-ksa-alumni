@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :job_posts
+  put 'job_posts/:id/update_preferences' => 'job_posts#update_preferences'
 
   get 'admin' => 'admin#index', :as => 'admin'
   post 'add_admin_user_path' => 'admin#create', :as => 'add_admin_user'

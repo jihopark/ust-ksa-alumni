@@ -13,7 +13,7 @@
     dictionary[select] = array
     @setState
       selected: dictionary
-    # have ajax call hrere
+    @updateJobPostPreference()
   removeSelected: (item, select) ->
     array = @state.selected[select]
     @removeElementFromArray(array, item)
@@ -21,11 +21,27 @@
     dictionary[select] = array
     @setState
       selected: dictionary
-    # have ajax call hrere
+    @updateJobPostPreference()
   removeElementFromArray: (array, item) ->
     i = array.indexOf(item)
     unless i == -1
       array.splice(i, 1)
+  updateJobPostPreference: () ->
+    console.log JSON.stringify {"majors": @state.selected["major"], "industries": @state.selected["industry"]}
+
+    $.ajax
+      url: '/job_posts/' + @props.job_post_id + '/update_preferences'
+      type: 'PUT'
+      dataType: 'json'
+      contentType: 'application/json'
+      data:
+        JSON.stringify {"majors": @state.selected["major"], "industries": @state.selected["industry"]}
+    .done @_updateSuccess
+    .fail @_updateFailure
+  _updateSuccess: () ->
+    console.log "Success"
+  _updateFailure: () ->
+    console.log "Fail"
   render: ->
     <div id="JobPostPreferences" className="row">
       <div className="column large-6 small-6">
