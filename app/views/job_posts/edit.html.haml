@@ -51,6 +51,11 @@
       .small-5.large-5.columns
   %fieldset
     %legend Preferences
+    #preference_tooltip
+      %span.has-tip{:"data-tooltip" => '', :"aria-haspopup" => true, :"title" => "You can set preferences of majors and industries to see how many people matches your needs"}
+        What are preferences?
+      %span.has-tip{:"data-tooltip" => '', :"aria-haspopup" => true, :"title" => "By setting preferences, the matched people will receive an email about this post"}
+        Why set preferences?
     = react_component 'JobPostPreferences', {job_post_id: @post.id}, :div
   .row.actions
     .small-centered.large-centered.columns.large-3.small-3
