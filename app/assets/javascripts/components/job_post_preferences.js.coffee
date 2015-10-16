@@ -6,6 +6,24 @@
     didFetchData: false
     selected: {"major":[], "industry":[]}
     matches: 2
+  componentDidMount: ->
+    @_fetchPreferences({})
+  _fetchPreferences: (data) ->
+    $.ajax
+      url: '/job_posts/' + @props.job_post_id + '/preferences'
+      type: 'GET'
+      dataType: 'json'
+    .done @_fetchPreferencesDone
+    .fail @_fetchPreferencesFail
+  _fetchPreferencesDone: (data, textStatus, jqXHR) ->
+    selected = []
+    selected["major"] = data.majors
+    selected["industry"] = data.industries
+    @setState
+      didFetchData: true
+      selected: selected
+  _fetchPreferencesFail: ->
+    console.log "Failed to load preferences"
   addSelected: (item, select) ->
     array = @state.selected[select]
     array.push(item)
@@ -22,15 +40,14 @@
     @setState
       selected: dictionary
     @updateJobPostPreference()
-  isSelected: (item, select) ->
-    @state.selected[select].indexOf(item) != -1
   removeElementFromArray: (array, item) ->
-    i = array.indexOf(item)
-    unless i == -1
-      array.splice(i, 1)
+    index = -1
+    for i in array
+      if i.id == item.id
+        index = array.indexOf(i)
+    unless index == -1
+      array.splice(index, 1)
   updateJobPostPreference: () ->
-    console.log JSON.stringify {"majors": @state.selected["major"], "industries": @state.selected["industry"]}
-
     $.ajax
       url: '/job_posts/' + @props.job_post_id + '/update_preferences'
       type: 'PUT'
@@ -46,18 +63,23 @@
     console.log "Fail"
   render: ->
     <div id="JobPostPreferences" className="row">
-      <div className="column large-6 small-6">
-        <MajorTags majors={@state.selected["major"]} />
-        <IndustryTags industries={@state.selected["industry"]} />
-        {@state.matches} Students matching one or more preferences.
-      </div>
-
-      <div className="column large-6 small-6">
-        <SelectTags select={"major"}
-        isSelected={@isSelected}
-        selected_majors={@state.selected["major"]}
-        selected_industries={@state.selected["industry"]}
-        addSelected={@addSelected}
-        removeSelected={@removeSelected} />
-      </div>
+      {
+        if @state.didFetchData
+          <div>
+            <div className="column large-6 small-6">
+              <MajorTags majors={@state.selected["major"]} />
+              <IndustryTags industries={@state.selected["industry"]} />
+              {@state.matches} Students matching one or more preferences.
+            </div>
+            <div className="column large-6 small-6">
+              <SelectTags select={"major"}
+              selected_majors={@state.selected["major"]}
+              selected_industries={@state.selected["industry"]}
+              addSelected={@addSelected}
+              removeSelected={@removeSelected} />
+            </div>
+          </div>
+        else
+          <div className="column large-12 small-12">Loading..</div>
+      }
     </div>

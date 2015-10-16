@@ -17,6 +17,15 @@ class JobPostsController < ApplicationController
     end
   end
 
+  def preferences
+    @job_post = JobPost.find_by_id(params[:id])
+    unless @job_post.nil?
+      render json: {"majors" => @job_post.major_preferences, "industries" => @job_post.industry_preferences}
+    else
+      render :json => false
+    end
+  end
+
   def update_preferences
     @job_post = JobPost.find_by_id(params[:id])
     @selected_majors = params[:majors]

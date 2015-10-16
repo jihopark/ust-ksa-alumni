@@ -5,7 +5,7 @@
   majors: []
   industries: []
   getInitialState: ->
-    didFetchData: false;
+    didFetchData: false
     loadingMessage: "Loading Data..."
     select: @props.select
   componentDidMount: ->
@@ -47,6 +47,17 @@
       @props.addSelected(item, select)
     else
       @props.removeSelected(item, select)
+  isSelected: (item, select) ->
+    if select == "major"
+      return @itemContains(@props.selected_majors, item)
+    else if select == "industry"
+      return @itemContains(@props.selected_industries, item)
+    return false
+  itemContains: (array, item) ->
+    for i in array
+      if i.id == item.id
+        return true
+    return false
   render: ->
     <div className="select_tags">
       <SelectTagsHeader className="SelectTagsHeader"
@@ -69,7 +80,7 @@
 
               <SelectTag key={key} item={item}
               select={@state.select}
-              checked={@props.isSelected(item, @state.select)}
+              checked={@isSelected(item, @state.select)}
               onCheckBoxChange={@onCheckBoxChange}
                />
           else
