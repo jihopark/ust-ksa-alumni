@@ -19,8 +19,17 @@ class JobPostsController < ApplicationController
 
   def preferences
     @job_post = JobPost.find_by_id(params[:id])
+    major_matches = User.joins(:majors).where("major_id IN (?)", @job_post.major_preferences.all.map { |e| e.id })
+    experienced_industries_matches = User.joins(:experienced_industries).where("industry_id IN (?)", @job_post.industry_preferences.all.map { |e| e.id })
+    interested_industries_matches = User.joins(:interested_industries).where("industry_id IN (?)", @job_post.industry_preferences.all.map { |e| e.id })
+
     unless @job_post.nil?
-      render json: {"majors" => @job_post.major_preferences, "industries" => @job_post.industry_preferences}
+      render json: {"majors" => @job_post.major_preferences,
+        "industries" => @job_post.industry_preferences,
+        "major_matches" => major_matches.count,
+        "experienced_industries_matches" => experienced_industries_matches.count,
+        "interested_industries_matches" => interested_industries_matches.count,
+        "total_matches" => (major_matches|experienced_industries_matches|interested_industries_matches).count}
     else
       render :json => false
     end

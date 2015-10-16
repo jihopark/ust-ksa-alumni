@@ -5,7 +5,10 @@
   getInitialState: ->
     didFetchData: false
     selected: {"major":[], "industry":[]}
-    matches: 2
+    major_matches: 0
+    experienced_industries_matches: 0
+    interested_industries_matches: 0
+    total_matches: 0
   componentDidMount: ->
     @_fetchPreferences({})
   _fetchPreferences: (data) ->
@@ -22,6 +25,10 @@
     @setState
       didFetchData: true
       selected: selected
+      major_matches: data.major_matches
+      experienced_industries_matches: data.experienced_industries_matches
+      interested_industries_matches: data.interested_industries_matches
+      total_matches: data.total_matches
   _fetchPreferencesFail: ->
     console.log "Failed to load preferences"
   addSelected: (item, select) ->
@@ -69,14 +76,19 @@
             <div className="column large-6 small-6">
               <MajorTags majors={@state.selected["major"]} />
               <IndustryTags industries={@state.selected["industry"]} />
-              {@state.matches} Students matching one or more preferences.
+              <PreferenceMatchCounts
+              major_matches={@state.major_matches}
+              experienced_industries_matches={@state.experienced_industries_matches}
+              interested_industries_matches={@state.interested_industries_matches}
+              total_matches={@state.total_matches} />
             </div>
             <div className="column large-6 small-6">
               <SelectTags select={"major"}
               selected_majors={@state.selected["major"]}
               selected_industries={@state.selected["industry"]}
               addSelected={@addSelected}
-              removeSelected={@removeSelected} />
+              removeSelected={@removeSelected}
+              />
             </div>
           </div>
         else
