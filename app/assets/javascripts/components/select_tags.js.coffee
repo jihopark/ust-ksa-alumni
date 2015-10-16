@@ -62,8 +62,14 @@
               data = @industries
 
             for item in data
-              <SelectTag key={item.id} item={item}
+              if @state.select == "major"
+                key = item.id
+              else
+                key = item.id*1000
+
+              <SelectTag key={key} item={item}
               select={@state.select}
+              checked={@props.isSelected(item, @state.select)}
               onCheckBoxChange={@onCheckBoxChange}
                />
           else

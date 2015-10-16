@@ -22,6 +22,8 @@
     @setState
       selected: dictionary
     @updateJobPostPreference()
+  isSelected: (item, select) ->
+    @state.selected[select].indexOf(item) != -1
   removeElementFromArray: (array, item) ->
     i = array.indexOf(item)
     unless i == -1
@@ -52,6 +54,7 @@
 
       <div className="column large-6 small-6">
         <SelectTags select={"major"}
+        isSelected={@isSelected}
         selected_majors={@state.selected["major"]}
         selected_industries={@state.selected["industry"]}
         addSelected={@addSelected}

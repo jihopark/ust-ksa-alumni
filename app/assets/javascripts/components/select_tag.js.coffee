@@ -3,7 +3,7 @@
 @SelectTag = React.createClass
   displayName: 'SelectTag'
   getInitialState: ->
-    checked: false
+    checked: @props.checked
   handleChange: (event) ->
     @setState
       checked: event.target.checked
