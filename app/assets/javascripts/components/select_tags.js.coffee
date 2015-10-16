@@ -64,7 +64,7 @@
       select={@state.select}
       onClickMajor={@onClickMajor} onClickIndustry={@onClickIndustry} />
 
-      <ul>
+      <ul className="tags_list">
         {
           if @state.didFetchData
             if @state.select == "major"

@@ -7,11 +7,11 @@
       <PreferenceTag key={"industry_"+industry.id}, name={industry.name}, category="industry" />
 
     <div className="industries_tags">
-      <h6 className="subheader">Industries</h6>
+      <h5>Selected Industries</h5>
       {
         if @props.industries.length > 0
           {industryTags}
         else
-          <h7 className="small">Click here to add industry preferences</h7>
+          <h7 className="small">Add industries on the right</h7>
       }
     </div>

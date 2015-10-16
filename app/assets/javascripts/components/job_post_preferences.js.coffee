@@ -84,13 +84,40 @@
         if @state.didFetchData
           <div>
             <div className="column large-6 small-6">
-              <MajorTags majors={@state.selected["major"]} />
-              <IndustryTags industries={@state.selected["industry"]} />
-              <PreferenceMatchCounts
-              major_matches={@state.major_matches}
-              experienced_industries_matches={@state.experienced_industries_matches}
-              interested_industries_matches={@state.interested_industries_matches}
-              total_matches={@state.total_matches} />
+              <MajorTags majors={@state.selected["major"]}/>
+
+              {
+                unless @state.major_matches == 0
+                  <div className="match_count_container">
+                    <span className="match_count">
+                      {@state.major_matches} people </span>
+                      <span className="underline">graduated or enrolled</span> in one of these majors
+                  </div>
+              }
+              <hr/>
+              <IndustryTags industries={@state.selected["industry"]}/>
+
+              {
+                unless @state.interested_industries_matches == 0
+                  <div className="match_count_container">
+                    <span className="match_count">
+                      {@state.interested_industries_matches} people </span>
+                      <span className="underline">are interested</span> in one of these industries
+                  </div>
+              }
+
+              {
+                unless @state.experienced_industries_matches == 0
+                  <div className="match_count_container">
+                    <span className="match_count">{@state.experienced_industries_matches} people </span>
+                    <span className="underline">have experience</span> in one of these industries
+                  </div>
+              }
+              <hr/>
+              <div className="match_count_container">
+                Total <span className="match_count total">{@state.total_matches} people </span>
+                matches one of your preferences
+              </div>
             </div>
             <div className="column large-6 small-6">
               <SelectTags select={"major"}

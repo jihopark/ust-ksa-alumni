@@ -11,3 +11,35 @@
   font-weight: bold;
   margin-right: 5px;
 }
+
+.tags_list {
+  list-style-type: none;
+  li {
+    input{
+      margin-right:2px;
+    }
+  }
+}
+
+.preference_tag {
+  margin-top: 4px;
+  margin-left: 2px;
+  margin-right:2px;
+}
+
+.match_count_container {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.match_count {
+  font-weight: bold;
+}
+
+.total {
+  font-size: 20px;
+}
+
+.underline {
+  text-decoration: underline;
+}
