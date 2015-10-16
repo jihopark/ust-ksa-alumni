@@ -11,6 +11,7 @@
     total_matches: 0
   componentDidMount: ->
     @_fetchPreferences({})
+    @_fetchPreferencesMatch({})
   _fetchPreferences: (data) ->
     $.ajax
       url: '/job_posts/' + @props.job_post_id + '/preferences'
@@ -25,12 +26,21 @@
     @setState
       didFetchData: true
       selected: selected
+  _fetchPreferencesFail: ->
+    console.log "Failed to load preferences"
+  _fetchPreferencesMatch: (data) ->
+    $.ajax
+      url: '/job_posts/' + @props.job_post_id + '/preferences_matches'
+      type: 'GET'
+      dataType: 'json'
+    .done @_fetchPreferencesMatchDone
+    .fail @_fetchPreferencesFail
+  _fetchPreferencesMatchDone: (data, textStatus, jqXHR) ->
+    @setState
       major_matches: data.major_matches
       experienced_industries_matches: data.experienced_industries_matches
       interested_industries_matches: data.interested_industries_matches
       total_matches: data.total_matches
-  _fetchPreferencesFail: ->
-    console.log "Failed to load preferences"
   addSelected: (item, select) ->
     array = @state.selected[select]
     array.push(item)
@@ -65,7 +75,7 @@
     .done @_updateSuccess
     .fail @_updateFailure
   _updateSuccess: () ->
-    console.log "Success"
+    @_fetchPreferencesMatch({})
   _updateFailure: () ->
     console.log "Fail"
   render: ->
