@@ -1,4 +1,34 @@
 class JobPostsController < ApplicationController
+  def update
+    @job_post = JobPost.find_by_id(params[:id])
+    @job_post.title = params[:job_post][:title]
+    @job_post.description = params[:job_post][:description]
+    @job_post.expire_date = Date.civil(params[:job_post]["expire_date(1i)"].to_i, params[:job_post]["expire_date(2i)"].to_i, params[:job_post]["expire_date(3i)"].to_i)
+    @job_post.has_event = params[:job_post][:has_event]
+
+    if @job_post.has_event
+      @job_post.event_venue = params[:job_post][:event_venue]
+      @job_post.event_time = DateTime.civil(params[:job_post]["event_time(1i)"].to_i, params[:job_post]["event_time(2i)"].to_i, params[:job_post]["event_time(3i)"].to_i, params[:job_post]["event_time(4i)"].to_i, params[:job_post]["event_time(5i)"].to_i)
+    end
+
+    if @job_post.save
+      @job_post.update(published:true)
+      flash[:success] = "Job Post Successfully Edited"
+      redirect_to show_job_post_path(@job_post)
+    else
+      error_msg = "Could Update information.\n"
+      @job_post.errors.full_messages.each do |msg|
+          error_msg += "\n" + msg
+      end
+      flash[:error] = error_msg
+      redirect_to edit_job_post_path(id: @job_post.id, code:@job_post.code)
+    end
+  end
+
+  def show
+
+  end
+
   def create
     @job_post = JobPost.new
     @job_post.admin_user_id = current_user.id
