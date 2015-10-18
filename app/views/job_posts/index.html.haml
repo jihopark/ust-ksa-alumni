@@ -1,2 +1,1 @@
-%h1 JobPost#index
-%p Find me in app/views/job_post/index.html.haml
+= react_component 'JobPostsIndex', {current_post: @current_post, ongoing_posts: @ongoing, past_posts:@past, past_load_more:@past_load_more}, :div

@@ -1,4 +1,23 @@
 class JobPostsController < ApplicationController
+
+  def show
+    #to show non-login user that job post has been created
+  end
+
+  def index
+    if params[:current]
+      @current_post = JobPost.find_by_id(params[:current])
+    end
+    if @current_post.nil?
+      @current_post = JobPost.first
+    end
+    @ongoing = JobPost.where(published: true).where("expire_date >= ?", Time.zone.now.beginning_of_day)
+    @past = JobPost.where(published: true).where("expire_date < ?", Time.zone.now.beginning_of_day)
+    @past_load_more = @past.count > 3
+    @past = @past.limit(3)
+  end
+
+
   def update
     @job_post = JobPost.find_by_id(params[:id])
     @job_post.host_contact = params[:job_post][:host_contact]
@@ -28,10 +47,6 @@ class JobPostsController < ApplicationController
       flash[:error] = error_msg
       redirect_to edit_job_post_path(id: @job_post.id, code:@job_post.code)
     end
-  end
-
-  def show
-    #to show non-login user that job post has been created
   end
 
   def create
@@ -114,9 +129,6 @@ class JobPostsController < ApplicationController
       flash[:error] = "Wrong URL. Please try again"
       redirect_to root_path
     end
-  end
-
-  def index
   end
 
   def destroy
