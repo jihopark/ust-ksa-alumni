@@ -1,6 +1,8 @@
 class JobPostsController < ApplicationController
   def update
     @job_post = JobPost.find_by_id(params[:id])
+    @job_post.host_contact = params[:job_post][:host_contact]
+    @job_post.host_organization = params[:job_post][:host_organization]
     @job_post.title = params[:job_post][:title]
     @job_post.description = params[:job_post][:description]
     @job_post.expire_date = Date.civil(params[:job_post]["expire_date(1i)"].to_i, params[:job_post]["expire_date(2i)"].to_i, params[:job_post]["expire_date(3i)"].to_i)
@@ -12,9 +14,8 @@ class JobPostsController < ApplicationController
     end
 
     if @job_post.save
-      @job_post.update(published:true)
-      flash[:success] = "Job Post Successfully Edited"
-      redirect_to show_job_post_path(@job_post)
+      flash[:notice] = "Successfully Edited"
+      redirect_to edit_job_post_path(id: @job_post.id, code:@job_post.code)
     else
       error_msg = "Could Update information.\n"
       @job_post.errors.full_messages.each do |msg|
