@@ -15,7 +15,11 @@ class JobPostsController < ApplicationController
 
     if @job_post.save
       flash[:notice] = "Successfully Edited"
-      redirect_to edit_job_post_path(id: @job_post.id, code:@job_post.code)
+      if current_user.nil?
+        redirect_to job_post_path
+      else
+        redirect_to edit_job_post_path(id: @job_post.id, code:@job_post.code)
+      end
     else
       error_msg = "Could Update information.\n"
       @job_post.errors.full_messages.each do |msg|
@@ -27,7 +31,7 @@ class JobPostsController < ApplicationController
   end
 
   def show
-
+    #to show non-login user that job post has been created
   end
 
   def create

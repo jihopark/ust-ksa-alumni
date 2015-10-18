@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   put 'job_posts/:id/update_preferences' => 'job_posts#update_preferences'
   get 'job_posts/:id/preferences' => 'job_posts#preferences'
   get 'job_posts/:id/preferences_matches' => 'job_posts#preferences_matches'
-
+  
   get 'admin' => 'admin#index', :as => 'admin'
   post 'add_admin_user_path' => 'admin#create', :as => 'add_admin_user'
   delete 'remove_from_admin' => 'admin#destroy', :as => 'remove_from_admin'
