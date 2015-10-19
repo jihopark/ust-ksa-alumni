@@ -1,7 +1,11 @@
 class JobPostsController < ApplicationController
 
   def show
-    #to show non-login user that job post has been created
+    @post = JobPost.find(params[:id])
+    respond_to do |format|
+      format.html #to show non-login user that job post has been created
+      format.json {render json: @post}
+    end
   end
 
   def index
